@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+<%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+<h1>Professors</h1>
+    <%= form_tag(search_professors_url, method: :get) do %>
+    <%= label_tag(:q, "Search for: ") %>
+    <%= text_field_tag(:q, params[:q]) %>
+    <%= submit_tag("Search") %>
+    <% end %> 
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @professors.each do |professor| %>
+      <tr>
+        <td><%= professor.name %></td>
+        <td><%= link_to 'Show', professor %></td>
+        <td><%= link_to 'Edit', edit_professor_path(professor) %></td>
+        <td><%= link_to 'Destroy', professor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Professor', new_professor_path %>
+<br>
+
+
+  <tbody>
+    <% @professors.each do |course| %>
+      <tr>
+        <h4> <%= course.name %> </h4>
+        <%= course.sections.each do |section| %>
+          <li> <%= section.course.name %> </li>
+          <li> </td><%= section.number %> </li>
+            <%= section.enrollments.each do |enrollment| %>
+              <li> <%= enrollment.student.name %> </li>
+              <li> <%= enrollment.student.identification %> </li>
+              <br>
+            <% end %>
+        <% end %>
+
+      </tr>
+    <% end %>
+
+<br>
+
+
